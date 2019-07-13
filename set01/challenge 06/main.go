@@ -43,7 +43,7 @@ func englishLetterFrequency(input string) float32 {
 		0.08167, 0.01492, 0.02782, 0.04253, 0.12702, 0.02228, 0.02015, // A-G
 		0.06094, 0.06966, 0.00153, 0.00772, 0.04025, 0.02406, 0.06749, // H-N
 		0.07507, 0.01929, 0.00095, 0.05987, 0.06327, 0.09056, 0.02758, // O-U
-		0.00978, 0.02360, 0.00150, 0.01974, 0.00074,                   // V-Z
+		0.00978, 0.02360, 0.00150, 0.01974, 0.00074, // V-Z
 	}
 	var observed [26]int
 	var ignored, invalid int
@@ -114,17 +114,17 @@ func GuessKeySize(data []byte, keepBest int) []keySizeCand {
 }
 
 func GuessRepeatingXorKey(data []byte) {
-	for _, cand := range GuessKeySize(data, 5) {
-		key := make([]rune, cand.KeySize)
-		for ki := 0; ki < cand.KeySize; ki++ {
-			testBuf := make([]byte, 0, len(data)/cand.KeySize)
-			for i := ki; i < len(data); i += cand.KeySize {
+	for _, sizeCand := range GuessKeySize(data, 5) {
+		key := make([]rune, sizeCand.KeySize) // "repeating key" for this key size candidate
+		for ki := 0; ki < sizeCand.KeySize; ki++ {
+			testBuf := make([]byte, 0, len(data)/sizeCand.KeySize)
+			for i := ki; i < len(data); i += sizeCand.KeySize {
 				testBuf = append(testBuf, data[i])
 			}
 			ch, _, _ := GuessXoredValue(testBuf)
 			key[ki] = ch
 		}
-		fmt.Printf("cand %+v key %s\n", cand, string(key))
+		fmt.Printf("candidate %+v key '%s'\n", sizeCand, string(key))
 	}
 }
 
