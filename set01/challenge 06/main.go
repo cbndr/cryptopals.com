@@ -142,6 +142,6 @@ func main() {
 	log.Println("read", len(bs), "bytes from file")
 	//s1 := "this is a test"
 	//s2 := "wokka wokka!!!"
-	//fmt.Println("Hamming dist (expected 37):", HammingDistance(s1, s2))
+	//fmt.Println("Hamming dist (expected 37):", HammingDistanceString(s1, s2))
 	GuessRepeatingXorKey(bs)
 }
