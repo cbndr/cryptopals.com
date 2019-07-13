@@ -43,6 +43,7 @@ func main() {
 	sc := bufio.NewScanner(f)
 	var lineNo int
 	var bestLineNo, bestScore int
+	// find the line with most repeating 16-byte chunks in it
 	for sc.Scan() {
 		lineNo++
 		// count identical 16 byte chunks
